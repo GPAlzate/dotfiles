@@ -118,3 +118,10 @@ antigen bundle zsh-users/zsh-autosuggestions
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/GabeAlzate/.sdkman"
+[[ -s "/Users/GabeAlzate/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/GabeAlzate/.sdkman/bin/sdkman-init.sh"
+source "$HOME/.sdkman/bin/sdkman-init.sh"
