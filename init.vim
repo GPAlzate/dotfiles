@@ -12,12 +12,17 @@ Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" misc shit
+" ******** tpope ************
+
+" auto comment shortcut
 Plug 'tpope/vim-commentary'
-Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-surround'
 
 " auto complete paired things like brackets
 Plug 'jiangmiao/auto-pairs'
+
+" show diffs beside line numbers
+Plug 'mhinz/vim-signify'
 
 " vimtex
 Plug 'lervag/vimtex'
