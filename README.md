@@ -1,4 +1,4 @@
-# NVIM and zshrc setup
+# NVIM and zshrc setup (Use iTerm2 so things look nice)
 
 First install [ripgrep](https://github.com/BurntSushi/ripgrep#installation)
 using:
@@ -20,8 +20,13 @@ brew install fzf
 1. Install [nvim](https://github.com/neovim/neovim/wiki/Installing-Neovim).
 2. Install [vim-plug](https://github.com/junegunn/vim-plug). Be sure to use the
    Neovim link, not the Vim one.
-    - For `coc.nvim`, need to install [nodejs](https://nodejs.org/en/download/).
-    - TODO: fix `vimtex_compiler`
+3. For coc extensions, run
+'''
+    python3 pip install --upgrade pip
+    python3 -m pip install --user --upgrade pynvim
+'''
+to install a python3 provider (idk why just do it).
+4. run `brew install ctags`
 
 For this, check how everything is doing using `:checkhealth`
 

@@ -1,8 +1,8 @@
-" ------------------------ PLUGINS START --------------------------------------
+" =============================== Plugins Start ===============================
 call plug#begin('~/.vim/plugged')
 
-" DISPLAY STUFF
-Plug 'jacoborus/tender.vim'
+" colorscheme plugin, use whatever you want
+Plug 'NLKNguyen/papercolor-theme'
 
 " the root of it all
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -28,35 +28,72 @@ Plug 'mhinz/vim-signify'
 Plug 'lervag/vimtex'
 
 call plug#end()
-" ------------------------ PLUGINS END ----------------------------------------
+" ================================ Plugins End ================================
+
+" ================================ nvim config ================================
 set encoding=UTF-8
 
-" Display
-au ColorScheme * hi Normal ctermbg=None     " makes the background not grey
-colorscheme tender
-set laststatus=2
-set relativenumber                      " relative line nums from current line
-set number                              " show line number of current line
-set colorcolumn=80                      " character guide bar
-set tabstop=4 shiftwidth=4 expandtab    " tab width to 4; change to spaces
-set linespace=3
-set linebreak
-set tw=80
+" sign column (e.g. for git and coc errors) use same color as current theme
+highlight SignColumn ctermbg=NONE cterm=NONE guibg=NONE gui=NONE
 
-" Cursor
+" -------------- Display stuff ----------------
+
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.dark': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
+
+" Set whatever colorscheme you want
+" set termguicolors
+" au ColorScheme * hi Normal ctermbg=None
+set background=dark
+colorscheme papercolor
+
+" show relative line nums from current line
+set relativenumber
+
+" show line number of current line
+set number
+
+" max line length of 80 chars
+set colorcolumn=100
+
+" tab width to 4, <TAB> key to indent, change tabs to spaces
+set tabstop=4 shiftwidth=4 expandtab
+
+" line height formatting
+set linespace=20
+
+" break lines with carriage return at a certain width
+set linebreak
+
+" text width of 80 chars
+set tw=100
+
+" -------------- Mouse stuff ----------------
+
+" can use mouse (this gets rid of cmd+c)
 set mouse=a
+
+" always have 3 lines above and below the cursor
 set scrolloff=3
+
+" allows cursor to move after the last char in a line
 set virtualedit=onemore
 
-" shorter time for error messages, git gutter, etc
-set updatetime=200
+" ----------------- Misc stuff ---------------------
 
-" Maintain undo history between sessions
+" shorter time for error messages
+set updatetime=100
+
+" maintain undo history between sessions
 set undofile
 set undodir=~/.config/nvim/undodir
 
-" switch buffers with ctrl b
-" noremap <C-b> :bn<CR>
+" ----------------- Remaps ----------------------
 
 " copy to clipboard shortcut
 vnoremap <C-c> "+y
@@ -64,23 +101,37 @@ vnoremap <C-c> "+y
 " exit insert mode and save
 inoremap jj <esc>:w<cr>
 
+" ================================ nvim config ================================
+
+" ============================== Plugin remaps ================================
+
+" ------------ tagbar -------------
+
+" exuberant ctags (required but idk why)????
+let g:tagbar_ctags_bin = "/usr/local/bin/ctags"
+
 " tagbar shortcut
 nmap <C-\> :TagbarToggle<CR>
+" ---------------------------------
 
-" ---------------------- commentary -------------------------------------------
+" ------------ signify -------------
 
-" comment remap (diff comments for normal and visual)
-nmap c<space> gcc
-vmap c<space> gc
+" green, red, yellow
+highlight SignifySignAdd    ctermfg=46 cterm=bold
+highlight SignifySignDelete ctermfg=196 cterm=bold
+highlight SignifySignChange ctermfg=226 cterm=bold
 
-" ---------------------- netrw stuff ------------------------------------------
-" let g:netrw_banner = 0
-" let g:netrw_liststyle = 3
-" let g:netrw_browse_split = 0
-" let g:netrw_altv = 1
-" let g:netrw_winsize = 25
+" ---------------------------------
 
-" ---------------------- coc-nvim stuff ---------------------------------------
+" ------------ coc-nvim -------------
+
+let g:coc_global_extensions = [
+    \ 'coc-json',
+    \ 'coc-java',
+    \ 'coc-snippets',
+    \ 'coc-explorer',
+    \ 'coc-prettier',
+    \ ]
 
 " ctrl-space to trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -103,8 +154,16 @@ nmap <Leader>R <Plug>(coc-rename)
 
 " file explorer
 nmap <C-n> :CocCommand explorer<CR>
+" -----------------------------------
 
-" ---------------------- fzf stuff --------------------------------------------
+" ------------ vim-commentary -------------
+
+" comment remap (diff comments for normal and visual)
+nmap c<space> gcc
+vmap c<space> gc
+" -----------------------------------------
+
+" ------------ FZF and ripgrep  -------------
 
 " look for files
 noremap <C-f> :Files<CR>
@@ -116,12 +175,14 @@ noremap <C-l> :Lines<CR>
 noremap <C-b> :Buffers<CR>
 
 " look for lines in all files ever wow
-noremap <C-p> :Ag<CR>
+noremap <C-p> :Rg<CR>
 
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
+" command! -bang -nargs=? -complete=dir Files
+"     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
+" -------------------------------------------
 
-" ---------------------- vimtex stuff -----------------------------------------
+" ------------ vimtex -------------
+
 let g:tex_flavor='latex'
 let g:vimtex_view_method = 'skim'
 let g:vimtex_quickfix_autoclose_after_keystrokes = 5
@@ -129,4 +190,15 @@ let g:vimtex_compiler_progname='nvr'
 
 " to avoid the weird quotes shit
 let g:vimtex_imaps_leader = ';'
+" ---------------------------------
 
+" ------------ netrw (not in use) -------------
+
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 0
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 25
+" ---------------------------------------------
+
+" ============================== Plugin remaps ================================
